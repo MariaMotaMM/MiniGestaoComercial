@@ -137,6 +137,7 @@ public class Produto {
 		if(estoque==null) {
 			throw new NullPointerException("O valor não pode ser nulo");
 		}
+		this.estoque=estoque;
 		return this;
 	}
 	

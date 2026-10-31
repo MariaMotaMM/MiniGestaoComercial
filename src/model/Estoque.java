@@ -7,9 +7,9 @@ import enums.TipoEntrada;
 import enums.TipoMovimentacao;
 import enums.TipoSaida;
 import exception.EstoqueInsuficienteException;
-import exception.MovimentacaoDeSaida;
+import exception.MovimentacaoDeSaidaException;
 import exception.MovimentacoesNaoRealizadaNoEstoque;
-import exception.MovimentacaoEntrada;
+import exception.MovimentacaoEntradaException;
 
 public class Estoque {
 	private Produto produto;
@@ -48,8 +48,12 @@ public class Estoque {
 		return quantidadeMinima;
 	}
 	
-	public void setQuantidadeMinima(int quantidadeMinima) {
+	public Estoque setQuantidadeMinima(int quantidadeMinima) {
+		if(quantidadeMinima<=0) {
+			throw new IllegalArgumentException("O valor nao pode ser menor ou igual a zero");
+		}
 		this.quantidadeMinima = quantidadeMinima;
+		return this;
 	}
 	
 	public void reduzirEstoque (TipoSaida tipoSaida, int quantidade, String descricao) {
@@ -129,7 +133,7 @@ public class Estoque {
 			}
 		}
 		if (semRegistroSaida) {
-			throw new MovimentacaoDeSaida("Nenhuma movimentação de saida!");
+			throw new MovimentacaoDeSaidaException("Nenhuma movimentação de saida!");
 		}
 		
 		StringBuilder string = new StringBuilder();
@@ -158,7 +162,7 @@ public class Estoque {
 			}
 		}
 		if (semRegistroSaida) {
-			throw new MovimentacaoEntrada("Nenhuma movimentação de entrada!");
+			throw new MovimentacaoEntradaException("Nenhuma movimentação de entrada!");
 		}
 		
 		
